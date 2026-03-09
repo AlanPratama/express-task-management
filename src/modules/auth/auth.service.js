@@ -4,6 +4,7 @@ import { createUser, findUserByEmail } from "../user/user.repository.js";
 import { generateJwtToken } from "../../shared/utils/jwt.js";
 import { generateError } from "../../shared/utils/error.js";
 import { HTTP_STATUS } from "../../shared/constants/http.constant.js";
+import { findUserByEmailService } from "../user/user.service.js";
 
 const generateJwtData = (token, user) => {
     return {
@@ -40,10 +41,7 @@ export const registerService = async (data) => {
 export const loginService = async (data) => {
   const { email, password } = data;
 
-  const existingUser = await findUserByEmail(email);
-
-  if (!existingUser)
-    throw generateError("User tidak ditemukan", HTTP_STATUS.NOT_FOUND)
+  const existingUser = await findUserByEmailService(email);
 
   const isValidPassword = bcrypt.compareSync(password, existingUser.password)
 

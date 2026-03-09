@@ -18,3 +18,16 @@ export const registerValidator = [
     .isLength({ min: 4 }).withMessage(VALIDATION_MESSAGE.MIN_LENGTH("Password", 4))
 
 ]
+
+export const loginValidator = [
+    body("email")
+    .notEmpty().withMessage(VALIDATION_MESSAGE.REQUIRED("Email"))
+    .isString().withMessage(VALIDATION_MESSAGE.STRING("Email"))
+    .isEmail().withMessage(VALIDATION_MESSAGE.EMAIL("Email")),
+
+    body("password")
+    .notEmpty().withMessage(VALIDATION_MESSAGE.REQUIRED("Password"))
+    .isString().withMessage(VALIDATION_MESSAGE.STRING("Password"))
+    .isLength({ min: 4 }).withMessage(VALIDATION_MESSAGE.MIN_LENGTH("Password", 4))
+
+]

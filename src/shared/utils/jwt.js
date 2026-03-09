@@ -29,3 +29,11 @@ export const getToken = (req) => {
 
   return token;
 };
+
+export const getTokenAndBindToRequest = (req) => {
+  const token = getToken(req)
+
+  req.body.token = token
+
+  return req
+};
