@@ -35,5 +35,5 @@ export const getTokenAndBindToRequest = (req) => {
 
   req.body.token = token
 
-  return req
+  return req.body
 };

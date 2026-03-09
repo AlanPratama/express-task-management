@@ -9,6 +9,7 @@ import { findUserByEmailService } from "../user/user.service.js";
 const generateJwtData = (token, user) => {
     return {
         token,
+        _id: user._id,
         email: user.email,
         role: user.role
     }

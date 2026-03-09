@@ -5,7 +5,9 @@ export const getPaginationParams = (req) => {
   const limit = parseInt(query.limit) || 10;
   const skip = (page - 1) * limit;
 
-  return { page, limit, skip };
+  req.body = {...req.body, page, limit, skip}
+
+  return req.body;
 };
 
 export const paginationReturn = (data, currentPage, totalItems, totalPages) => {

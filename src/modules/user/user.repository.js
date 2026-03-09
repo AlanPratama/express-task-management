@@ -6,6 +6,6 @@ export const updateUser = (user) => userModel.updateOne(user.id, user)
 
 export const findUserByEmail = (email) => userModel.findOne({ email })
 
-export const findUserById = (id) => userModel.findOne({ id })
+export const findUserById = (_id) => userModel.findOne({ _id })
 
 export const getAllUser = () => userModel.find()

@@ -17,4 +17,4 @@ const workspaceSchema = new mongoose.Schema({
 
 workspaceSchema.index({ owner: 1 });
 
-export default mongoose.Model("Workspace", workspaceSchema)
+export default mongoose.model("Workspace", workspaceSchema)

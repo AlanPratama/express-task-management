@@ -1,29 +1,39 @@
 import { HTTP_STATUS } from "../../shared/constants/http.constant.js";
 import { generateError } from "../../shared/utils/error.js";
 import { paginationReturn } from "../../shared/utils/pagination.js";
-import { findUserByTokenService } from "../user/user.service";
+import { findUserById } from "../user/user.repository.js";
 import { WorkspaceConstant } from "./workspace.constant.js";
+import { ListWorkspaceToDTO, WorkspaceToDTO } from "./workspace.mapper.js";
 import workspaceModel from "./workspace.model.js";
 import {
   createWorkspace,
   deleteWorkspaceById,
+  findAllWorkspaceByOwnerIdWithPagination,
   findWorkspaceById,
   updateWorkspace,
 } from "./workspace.repository.js";
-import { validateWorkspaceOwner } from "./workspace.validation.js";
 
 export const findAllWorkspaceService = async (data) => {
-  const { page, limit, skip } = data;
+  const { user, page, limit, skip } = data;
 
-  const workspaces = workspaceModel.find({}).skip(skip).limit(limit).exec();
+  const workspaces = await findAllWorkspaceByOwnerIdWithPagination(
+    user._id,
+    skip,
+    limit,
+  );
 
   const totalItems = await workspaceModel.countDocuments({});
   const totalPages = Math.ceil(totalItems / limit);
 
-  return paginationReturn(workspaces, page, totalItems, totalPages);
+  return paginationReturn(
+    ListWorkspaceToDTO(workspaces),
+    page,
+    totalItems,
+    totalPages,
+  );
 };
 
-export const findWorkspaceByIdService = async (id) => {
+export const findWorkspaceByIdService = async (id, data) => {
   const workspace = await findWorkspaceById(id);
 
   if (!workspace)
@@ -32,44 +42,36 @@ export const findWorkspaceByIdService = async (id) => {
       HTTP_STATUS.NOT_FOUND,
     );
 
-  return workspace;
+  return WorkspaceToDTO(workspace);
 };
 
 export const createWorkspaceService = async (data) => {
-  const { token, name } = data;
+  const { user, name } = data;
 
-  const owner = findUserByTokenService(token);
+  const owner = await findUserById(user._id);
 
   const newWorkspace = new workspaceModel({
     owner,
     name,
   });
 
-  return await createWorkspace(newWorkspace);
+  return WorkspaceToDTO(await createWorkspace(newWorkspace));
 };
 
 export const updateWorkspaceService = async (id, data) => {
-  const { token } = data;
+  const { name } = data;
 
-  const owner = findUserByTokenService(token);
+  await findWorkspaceByIdService(id);
+  
+  const updatedWorkspace = await updateWorkspace(id, { name }).populate(
+    "owner",
+  );
 
-  const existWorkspace = findWorkspaceByIdService(id);
-
-  validateWorkspaceOwner(existWorkspace, owner);
-
-  existWorkspace.name = data.name;
-
-  return await updateWorkspace(id, newWorkspace);
+  return WorkspaceToDTO(updatedWorkspace);
 };
 
 export const deleteWorkspaceService = async (id, data) => {
-  const { token } = data;
+  await findWorkspaceByIdService(id, data);
 
-  const owner = findUserByTokenService(token);
-
-  const existWorkspace = findWorkspaceByIdService(id);
-
-  validateWorkspaceOwner(existWorkspace, owner);
-
-  return await deleteWorkspaceById(id);
+  return WorkspaceToDTO(await deleteWorkspaceById(id));
 };

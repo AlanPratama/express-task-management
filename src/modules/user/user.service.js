@@ -4,7 +4,7 @@ import { generateError } from "../../shared/utils/error.js";
 import { verifyToken } from "../../shared/utils/jwt.js";
 import { UserConstant } from "./user.constant.js";
 import { UserToDTO } from "./user.mapper.js";
-import { findUserById, updateUser } from "./user.repository.js";
+import { findUserByEmail, findUserById, updateUser } from "./user.repository.js";
 
 export const findUserByTokenService = async (token) => {
   const jwtUserDecode = verifyToken(token)?.data;

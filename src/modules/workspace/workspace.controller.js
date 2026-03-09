@@ -1,44 +1,37 @@
 import { HTTP_STATUS } from "../../shared/constants/http.constant.js"
-import { getToken, getTokenAndBindToRequest } from "../../shared/utils/jwt.js"
+import { asyncHandler } from "../../shared/utils/asyncHandler.js"
+import { getPaginationParams } from "../../shared/utils/pagination.js"
 import { responseSuccess } from "../../shared/utils/response.js"
-import { findAllWorkspaceService } from "./workspace.service.js"
+import { createWorkspaceService, deleteWorkspaceService, findAllWorkspaceService, findWorkspaceByIdService, updateWorkspaceService } from "./workspace.service.js"
 
-export const findAllWorkspace = async (req, res) => {
-    req.body = getTokenAndBindToRequest(req)
+export const findAllWorkspace = asyncHandler(async (req, res) => {
+    req.body = getPaginationParams(req)
 
-    const data = findAllWorkspaceService(req.body)
+    const data = await findAllWorkspaceService(req.body)
 
-    return responseSuccess(res, HTTP_STATUS.OK, "Berhasil workspace", data)
-}
+    responseSuccess(res, HTTP_STATUS.OK, "Berhasil workspace", data)
+})
 
-export const findWorkspaceById = async (req, res) => {
-    req.body = getTokenAndBindToRequest(req)
+export const findWorkspaceById = asyncHandler(async (req, res) => {
+    const data = await findWorkspaceByIdService(req.params.id, req.body)
 
-    const data = findAllWorkspaceService(req.body)
+    responseSuccess(res, HTTP_STATUS.OK, "Berhasil workspace", data)
+})
 
-    return responseSuccess(res, HTTP_STATUS.OK, "Berhasil workspace", data)
-}
+export const createWorkspace = asyncHandler(async (req, res) => {
+    const data = await createWorkspaceService(req.body)
 
-export const createWorkspace = async (req, res) => {
-    req.body = getTokenAndBindToRequest(req)
+    responseSuccess(res, HTTP_STATUS.OK, "Berhasil workspace", data)
+})
 
-    const data = findAllWorkspaceService(req.body)
+export const updateWorkspace = asyncHandler(async (req, res) => {
+    const data = await updateWorkspaceService(req.params.id, req.body)
 
-    return responseSuccess(res, HTTP_STATUS.OK, "Berhasil workspace", data)
-}
+    responseSuccess(res, HTTP_STATUS.OK, "Berhasil workspace", data)
+})
 
-export const updateWorkspace = async (req, res) => {
-    req.body = getTokenAndBindToRequest(req)
+export const deleteWorkspace = asyncHandler(async (req, res) => {
+    const data = await deleteWorkspaceService(req.params.id, req.body)
 
-    const data = findAllWorkspaceService(req.body)
-
-    return responseSuccess(res, HTTP_STATUS.OK, "Berhasil workspace", data)
-}
-
-export const deleteWorkspace = async (req, res) => {
-    req.body = getTokenAndBindToRequest(req)
-
-    const data = findAllWorkspaceService(req.body)
-
-    return responseSuccess(res, HTTP_STATUS.OK, "Berhasil workspace", data)
-}
+    responseSuccess(res, HTTP_STATUS.OK, "Berhasil workspace", data)
+})

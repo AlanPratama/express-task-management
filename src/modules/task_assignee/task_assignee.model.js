@@ -11,7 +11,7 @@ const taskAssigneeSchema = new mongoose.Schema({
         ref: "User",
         required: true
     },
-    assigned_at: {
+    assignedAt: {
         type: Date,
         required: true
     }

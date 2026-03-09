@@ -13,10 +13,8 @@ export const authMiddleware = (req, res, next) => {
 
     try {
         const decoded = verifyToken(token)
-        console.log(`decoded: ${decoded.data}`);
-        
 
-        req.user = decoded.data
+        req.body.user = decoded.data
 
         next()
     } catch(error) {
