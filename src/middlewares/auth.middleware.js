@@ -14,6 +14,8 @@ export const authMiddleware = (req, res, next) => {
     try {
         const decoded = verifyToken(token)
 
+        if (!req.body) req.body = {};
+
         req.body.user = decoded.data
 
         next()

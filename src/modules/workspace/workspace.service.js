@@ -62,7 +62,7 @@ export const updateWorkspaceService = async (id, data) => {
   const { name } = data;
 
   await findWorkspaceByIdService(id);
-  
+
   const updatedWorkspace = await updateWorkspace(id, { name }).populate(
     "owner",
   );

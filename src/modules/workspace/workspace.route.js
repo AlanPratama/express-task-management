@@ -3,12 +3,12 @@ import { createWorkspace, deleteWorkspace, findAllWorkspace, findWorkspaceById, 
 import { requestWorkspaceValidation } from './workspace.validation.js'
 import { validationMiddleware } from '../../middlewares/validation.middleware.js'
 
-const workspaceRoute = express.Router()
+const workspaceRoutes = express.Router()
 
-workspaceRoute.get("/", findAllWorkspace)
-workspaceRoute.get("/:id", findWorkspaceById)
-workspaceRoute.post("/", requestWorkspaceValidation, validationMiddleware, createWorkspace)
-workspaceRoute.put("/:id", requestWorkspaceValidation, validationMiddleware, updateWorkspace)
-workspaceRoute.delete("/:id", deleteWorkspace)
+workspaceRoutes.get("/", findAllWorkspace)
+workspaceRoutes.get("/:id", findWorkspaceById)
+workspaceRoutes.post("/", requestWorkspaceValidation, validationMiddleware, createWorkspace)
+workspaceRoutes.put("/:id", requestWorkspaceValidation, validationMiddleware, updateWorkspace)
+workspaceRoutes.delete("/:id", deleteWorkspace)
 
-export default workspaceRoute
+export default workspaceRoutes

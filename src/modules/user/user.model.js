@@ -18,7 +18,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['admin', 'user'],
     default: 'user'
-  }
+  },
+  photoUrl: {
+    type: String,
+  },
+  photoPublicId: {
+    type: String,
+  },
 }, {
     timestamps: true
 });

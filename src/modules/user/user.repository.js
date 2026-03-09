@@ -2,7 +2,7 @@ import userModel from "./user.model.js";
 
 export const createUser = (user) => userModel.create(user)
 
-export const updateUser = (user) => userModel.updateOne(user.id, user)
+export const updateUser = (_id, user) => userModel.findByIdAndUpdate(_id, user, { returnDocument: "after" })
 
 export const findUserByEmail = (email) => userModel.findOne({ email })
 
