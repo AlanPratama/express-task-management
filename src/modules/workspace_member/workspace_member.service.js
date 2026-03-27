@@ -53,11 +53,11 @@ export const findWorkspaceMemberByWorkspaceIdAndUserIdService = async (workspace
 };
 
 export const createWorkspaceMemberService = async (data) => {
-  const { user, workspaceId, memberId, privilege, role } = data;
+  const { authenticatedUser, workspaceId, memberId, privilege, role } = data;
 
   const workspace = await findWorkspaceByIdService(workspaceId);
 
-  await checkValidUser(workspaceId, user._id);
+  await checkValidUser(workspaceId, authenticatedUser._id);
 
   const member = await findUserByIdService(memberId);
 
@@ -76,11 +76,11 @@ export const createWorkspaceMemberService = async (data) => {
 };
 
 export const updateWorkspaceMemberService = async (id, data) => {
-  const { user, memberId, privilege, role } = data;
+  const { authenticatedUser, memberId, privilege, role } = data;
 
   const existingWorkspaceMember = await findWorkspaceMemberByIdService(id);
 
-  await checkValidUser(existingWorkspaceMember.workspace._id, user._id);
+  await checkValidUser(existingWorkspaceMember.workspace._id, authenticatedUser._id);
   await checkOwnerOfWorkspace(existingWorkspaceMember);
 
   const member = await findUserByIdService(memberId);
@@ -93,11 +93,11 @@ export const updateWorkspaceMemberService = async (id, data) => {
 };
 
 export const deleteWorkspaceMemberService = async (id, data) => {
-  const { user } = data;
+  const { authenticatedUser } = data;
 
   const existingWorkspaceMember = await findWorkspaceMemberByIdService(id);
 
-  await checkValidUser(existingWorkspaceMember.workspace._id, user._id);
+  await checkValidUser(existingWorkspaceMember.workspace._id, authenticatedUser._id);
   await checkOwnerOfWorkspace(existingWorkspaceMember);
 
   return await deleteWorkspaceMemberById(id);

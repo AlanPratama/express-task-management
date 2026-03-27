@@ -25,8 +25,8 @@ const validateWorkspace = async (workspaceId, userId) => {
 };
 
 export const findAllProjectService = async (data) => {
-  const { user, workspaceId, name, page, limit, skip } = data;
-  await validateWorkspace(workspaceId, user._id, false);
+  const { authenticatedUser, workspaceId, name, page, limit, skip } = data;
+  await validateWorkspace(workspaceId, authenticatedUser._id, false);
 
   const workspaceMembers = await findAllProjectPagination(
     workspaceId,
@@ -42,8 +42,8 @@ export const findAllProjectService = async (data) => {
 };
 
 export const findProjectByIdService = async (id) => {
-  const { user } = data;
-  await validateWorkspace(workspaceId, user._id, false);
+  const { authenticatedUser } = data;
+  await validateWorkspace(workspaceId, authenticatedUser._id, false);
 
   const project = await findProjectById(id);
 
@@ -53,8 +53,8 @@ export const findProjectByIdService = async (id) => {
 };
 
 export const createProjectService = async (data) => {
-  const { user, workspaceId, name, description } = data;
-  await validateWorkspace(workspaceId, user._id, true);
+  const { authenticatedUser, workspaceId, name, description } = data;
+  await validateWorkspace(workspaceId, authenticatedUser._id, true);
 
   const workspace = await findWorkspaceByIdService(workspaceId);
 
@@ -70,8 +70,8 @@ export const createProjectService = async (data) => {
 };
 
 export const updateProjectService = async (id, data) => {
-  const { user, workspaceId, name, description } = data;
-  await validateWorkspace(workspaceId, user._id, true);
+  const { authenticatedUser, workspaceId, name, description } = data;
+  await validateWorkspace(workspaceId, authenticatedUser._id, true);
 
   const project = await findProjectByIdService(id);
 
@@ -85,8 +85,8 @@ export const updateProjectService = async (id, data) => {
 };
 
 export const deleteProjectService = async (id) => {
-  const { user } = data;
-  await validateWorkspace(workspaceId, user._id, true);
+  const { authenticatedUser } = data;
+  await validateWorkspace(workspaceId, authenticatedUser._id, true);
 
   await findProjectByIdService(id);
 

@@ -1,5 +1,4 @@
-import { HTTP_STATUS } from "../../shared/constants/http.constant.js";
-import { ErrorUtil, generateError } from "../../shared/utils/error.js";
+import { ErrorUtil } from "../../shared/utils/error.js";
 import { paginationReturn } from "../../shared/utils/pagination.js";
 import { findUserById } from "../user/user.repository.js";
 import workspace_memberModel from "../workspace_member/workspace_member.model.js";
@@ -15,11 +14,11 @@ import {
 } from "./workspace.repository.js";
 
 export const findAllWorkspaceService = async (data) => {
-  const { user, name, page, limit, skip } = data;
+  const { authenticatedUser, name, page, limit, skip } = data;
 
   const workspaces = await findAllWorkspaceByOwnerIdWithPagination(
     name,
-    user._id,
+    authenticatedUser._id,
     skip,
     limit,
   );
@@ -39,9 +38,9 @@ export const findWorkspaceByIdService = async (id) => {
 };
 
 export const createWorkspaceService = async (data) => {
-  const { user, name } = data;
+  const { authenticatedUser, name } = data;
 
-  const owner = await findUserById(user._id);
+  const owner = await findUserById(authenticatedUser._id);
 
   const newWorkspace = await createWorkspace(
     new workspaceModel({

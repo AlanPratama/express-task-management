@@ -16,7 +16,7 @@ export const authMiddleware = (req, res, next) => {
 
         if (!req.body) req.body = {};
 
-        req.body.user = decoded.data
+        req.body.authenticatedUser = decoded.data
 
         next()
     } catch(error) {

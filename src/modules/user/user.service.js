@@ -73,9 +73,9 @@ const logicUpdateUser = async (id, data) => {
 };
 
 export const updateMyProfileUserService = async (data) => {
-  const { user } = data;
+  const { authenticatedUser } = data;
 
-  return await logicUpdateUser(user._id, data);
+  return await logicUpdateUser(authenticatedUser._id, data);
 };
 
 export const updateUserService = async (data) => {
