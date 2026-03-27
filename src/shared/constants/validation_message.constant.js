@@ -1,4 +1,5 @@
 export const VALIDATION_MESSAGE = {
+  FORBIDDEN_USER_MSG: "Kamu tidak memiliki akses",
   REQUIRED: (field) => `${field} wajib diisi`,
   STRING: (field) => `${field} harus berupa string`,
   NUMBER: (field) => `${field} harus berupa angka`,

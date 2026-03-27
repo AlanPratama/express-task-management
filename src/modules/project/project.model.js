@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const projectSchema = new mongoose.Schema({
     workspace: {
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Workspace",
         required: true
     },
@@ -16,5 +16,7 @@ const projectSchema = new mongoose.Schema({
 }, {
     timestamps: true
 })
+
+projectSchema.index({ workspace: 1 });
 
 export default mongoose.Model("Project", projectSchema)

@@ -11,7 +11,7 @@ const workspaceMemberSchema = new mongoose.Schema({
         ref: "User",
         required: true
     },
-    privilage: {
+    privilege: {
         type: String,
         enum: ["view", "edit"],
         default: "view"
@@ -20,8 +20,10 @@ const workspaceMemberSchema = new mongoose.Schema({
         type: String,
         enum: ["owner", "admin", "member"]
     }
+}, {
+    timestamps: true
 })
 
 workspaceMemberSchema.index({ workspace: 1, user: 1 });
 
-export default mongoose.Model("WorkspaceMember", workspaceMemberSchema)
+export default mongoose.model("WorkspaceMember", workspaceMemberSchema)

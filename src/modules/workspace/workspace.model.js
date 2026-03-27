@@ -12,7 +12,15 @@ const workspaceSchema = new mongoose.Schema({
         trim: true
     },
 }, {
-    timestamps: true
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+})
+
+workspaceSchema.virtual('members', {
+    ref: "WorkspaceMember",
+    localField: "_id",
+    foreignField: "workspace"
 })
 
 workspaceSchema.index({ owner: 1 });

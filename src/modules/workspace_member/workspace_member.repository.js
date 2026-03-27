@@ -1,13 +1,62 @@
-import workspace_memberModel from "./workspace_member.model.js"
+import workspace_memberModel from "./workspace_member.model.js";
+import userModel from "../user/user.model.js";
 
-export const createWorkspaceMember = (workspaceMember) => workspace_memberModel.create(workspaceMember)
+export const findAllWorkspaceMemberPagination = async (
+  workspaceId,
+  name,
+  skip,
+  limit,
+) => {
+  const criteria = { workspace: workspaceId };
 
-export const updateWorkspaceMember = (_id, workspaceMember) => workspace_memberModel.updateOne(_id, workspaceMember)
+  if (name) {
+    const userIds = (
+      await userModel.find({ name: { $regex: name, $options: "i" } }).lean()
+    ).map((user) => user._id);
 
-export const deleteWorkspaceByIdMember = (_id) => workspace_memberModel.deleteOne({ _id })
+    criteria.user = { $in: userIds };
+  }
 
-export const findWorkspaceByNameMember = (name) => workspace_memberModel.findOne({ name })
+  return await workspace_memberModel
+    .find(criteria)
+    .skip(skip)
+    .limit(limit)
+    .populate("user")
+    .populate({ path: "workspace", populate: "owner" });
+};
 
-export const findWorkspaceByIdMember = (_id) => workspace_memberModel.findOne({ _id })
+export const findWorkspaceMemberById = (_id) =>
+  workspace_memberModel
+    .findOne({ _id })
+    .populate("user")
+    .populate({ path: "workspace", populate: "owner" });
 
-export const getAllWorkspaceMember = () => workspace_memberModel.find()
+export const findWorkspaceMemberByWorkspaceIdAndUserId = (
+  workspaceId,
+  userId,
+) =>
+  workspace_memberModel
+    .findOne({ workspace: workspaceId, user: userId })
+    .populate("workspace");
+
+export const checkWorkspaceMemberByWorkspaceIdAndUserId = (
+  workspaceId,
+  userId,
+) =>
+  workspace_memberModel
+    .findOne({ workspace: workspaceId, user: userId })
+    .select("_id");
+
+export const createWorkspaceMember = (workspaceMember) =>
+  workspace_memberModel.create(workspaceMember);
+
+export const updateWorkspaceMember = (_id, workspaceMember) =>
+  workspace_memberModel
+    .findByIdAndUpdate(_id, workspaceMember, {
+      returnDocument: "after",
+    })
+    .populate("user")
+    .populate({ path: "workspace", populate: "owner" });
+
+export const deleteWorkspaceMemberById = (_id) =>
+  workspace_memberModel.findByIdAndDelete(_id, { returnDocument: "after" });

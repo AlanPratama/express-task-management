@@ -11,7 +11,6 @@ import {
 import { generateError } from "../../shared/utils/error.js";
 import { verifyToken } from "../../shared/utils/jwt.js";
 import { UserConstant } from "./user.constant.js";
-import { UserToDTO } from "./user.mapper.js";
 import {
   findUserByEmail,
   findUserById,
@@ -70,7 +69,7 @@ const logicUpdateUser = async (id, data) => {
 
   if (data.password) existUser.password = bcrypt.hashSync(data.password, 12);
 
-  return UserToDTO(await updateUser(id, existUser));
+  return await updateUser(id, existUser);
 };
 
 export const updateMyProfileUserService = async (data) => {

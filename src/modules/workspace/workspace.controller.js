@@ -13,7 +13,7 @@ export const findAllWorkspace = asyncHandler(async (req, res) => {
 })
 
 export const findWorkspaceById = asyncHandler(async (req, res) => {
-    const data = await findWorkspaceByIdService(req.params.id, req.body)
+    const data = await findWorkspaceByIdService(req.params.id)
 
     responseSuccess(res, HTTP_STATUS.OK, "Berhasil workspace", data)
 })
