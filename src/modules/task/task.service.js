@@ -1,6 +1,5 @@
 import { ErrorUtil } from "../../shared/utils/error.js";
 import { paginationReturn } from "../../shared/utils/pagination.js";
-import projectModel from "../project/project.model.js";
 import { findProjectByIdService } from "../project/project.service.js";
 import { findUserByIdService } from "../user/user.service.js";
 import { TaskConstant } from "./task.constant.js";
@@ -18,7 +17,7 @@ export const findAllTaskPaginationService = async (data) => {
 
   const workspaceMembers = await findAllTaskPagination(projectId, skip, limit);
 
-  const totalItems = await projectModel.countDocuments({});
+  const totalItems = await taskModel.countDocuments({});
   const totalPages = Math.ceil(totalItems / limit);
 
   return paginationReturn(workspaceMembers, page, totalItems, totalPages);
@@ -34,8 +33,8 @@ export const findTaskByIdService = async (id) => {
 
 export const createTaskService = async (data) => {
   const {
+    authenticatedUser,
     projectId,
-    ownerId,
     title,
     description,
     status,
@@ -44,9 +43,9 @@ export const createTaskService = async (data) => {
   } = data;
 
   const project = await findProjectByIdService(projectId);
-  const owner = await findUserByIdService(ownerId)
+  const owner = await findUserByIdService(authenticatedUser._id)
 
-  dueDate = new Date(dueDate);
+  // const formattedDue = new Date(dueDate);
 
   const task = await createTask(
     new taskModel({
@@ -76,8 +75,6 @@ export const updateTaskService = async (id, data) => {
   const project = await findProjectByIdService(projectId);
   const task = await findTaskByIdService(id)
   
-  dueDate = new Date(dueDate);
-
   task.project = project
   task.title = title
   task.description = description

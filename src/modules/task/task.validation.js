@@ -11,12 +11,6 @@ export const requestTaskValidation = [
     .isString()
     .withMessage(VALIDATION_MESSAGE.STRING("Project ID")),
 
-  body("ownerId")
-    .notEmpty()
-    .withMessage(VALIDATION_MESSAGE.REQUIRED("Owner ID"))
-    .isString()
-    .withMessage(VALIDATION_MESSAGE.STRING("Owner ID")),
-
   body("title")
     .notEmpty()
     .withMessage(VALIDATION_MESSAGE.REQUIRED("Judul"))
