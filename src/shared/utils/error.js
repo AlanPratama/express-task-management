@@ -17,5 +17,8 @@ export const ErrorUtil = {
   },
   checkForbidden: (condition, message = ERROR_CONSTANT.FORBIDDEN_MSG) => {
     if (condition) throw generateError(HTTP_STATUS.FORBIDDEN, message)
+  },
+  checkUnAuthorized: (condition, message = ERROR_CONSTANT.UNAUTHORIZED_MSG) => {
+    if (condition) throw generateError(HTTP_STATUS.UNAUTHORIZED, message)
   }
 };

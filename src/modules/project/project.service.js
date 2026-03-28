@@ -13,12 +13,11 @@ import {
 } from "./project.repository.js";
 
 export const findAllProjectService = async (data) => {
-  const { authenticatedUser, workspaceId, name, page, limit, skip } = data;
+  const { authenticatedUser, workspaceId, page, limit, skip } = data;
   await validateWorkspaceMember(workspaceId, authenticatedUser._id, false);
 
   const workspaceMembers = await findAllProjectPagination(
     workspaceId,
-    name,
     skip,
     limit,
   );

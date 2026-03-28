@@ -1,9 +1,15 @@
 import mongoose from "mongoose";
+import { TaskConstant } from "./task.constant";
 
 const taskSchema = new mongoose.Schema({
   project: {
-    type: mongoose.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Project",
+    required: true
+  },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true
   },
   title: {
@@ -16,21 +22,16 @@ const taskSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['pending', 'todo', 'in_progress', 'done'],
-    default: 'pending'
+    enum: TaskConstant.TASK_STATUS,
+    default: TaskConstant.TASK_STATUS_DEFAULT
   },
   priority: {
     type: String,
-    enum: ['low', 'medium', 'high'],
-    default: 'medium'
+    enum: TaskConstant.TASK_PRIORITY,
+    default: TaskConstant.TASK_PRIORITY_DEFAULT
   },
   dueDate: {
     type: Date
-  },
-  created_by: {
-    type: mongoose.Types.ObjectId,
-    ref: "User",
-    required: true
   }
 }, {
   timestamps: true

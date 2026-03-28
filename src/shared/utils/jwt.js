@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { generateError } from "./error.js";
+import { ErrorUtil } from "./error.js";
 
 export const generateJwtToken = (data, expiresIn = "1d") => {
   const token = jwt.sign(
@@ -22,8 +22,7 @@ export const verifyToken = (token) => {
 export const getToken = (req) => {
   const authHeader = req.headers.authorization;
 
-  if (!authHeader)
-    throw generateError("Token Required", HTTP_STATUS.UNAUTHORIZED);
+  ErrorUtil.checkUnAuthorized(!authHeader, "Token Required")
 
   const token = authHeader.split(" ")[1];
 

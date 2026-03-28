@@ -1,9 +1,8 @@
 import bcrypt from "bcrypt";
+import { ErrorUtil } from "../../shared/utils/error.js";
+import { generateJwtToken } from "../../shared/utils/jwt.js";
 import userModel from "../user/user.model.js";
 import { createUser, findUserByEmail } from "../user/user.repository.js";
-import { generateJwtToken } from "../../shared/utils/jwt.js";
-import { generateError } from "../../shared/utils/error.js";
-import { HTTP_STATUS } from "../../shared/constants/http.constant.js";
 import { findUserByEmailService } from "../user/user.service.js";
 
 const generateJwtData = (token, user) => {
@@ -20,8 +19,7 @@ export const registerService = async (data) => {
 
   const existingUser = await findUserByEmail(email)
 
-  if (existingUser)
-    throw generateError(`Email ${email} telah digunakan, silahkan gunakan email lainnya`, HTTP_STATUS.UNAUTHORIZED)
+  ErrorUtil.checkUnAuthorized(existingUser, `Email ${email} telah digunakan, silahkan gunakan email lainnya`)
 
   const hashedPassword = bcrypt.hashSync(password, 12);
 
@@ -46,8 +44,7 @@ export const loginService = async (data) => {
 
   const isValidPassword = bcrypt.compareSync(password, existingUser.password)
 
-  if (!isValidPassword)
-    throw generateError("Email / password salah", HTTP_STATUS.UNAUTHORIZED)
+  ErrorUtil.checkUnAuthorized(!isValidPassword, `Email / password salah`)
 
   const token = generateJwtToken(generateJwtData(null, existingUser));
 

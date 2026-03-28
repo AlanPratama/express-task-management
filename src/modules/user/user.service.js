@@ -3,12 +3,11 @@ import {
   CLOUDINARY_FOLDER,
   CLOUDINARY_TRANSFORM,
 } from "../../shared/constants/cloudinary.constant.js";
-import { HTTP_STATUS } from "../../shared/constants/http.constant.js";
 import {
   cloudinaryDeleteFile,
   cloudinaryUploadBuffer,
 } from "../../shared/utils/cloudinary_upload.js";
-import { generateError } from "../../shared/utils/error.js";
+import { ErrorUtil } from "../../shared/utils/error.js";
 import { verifyToken } from "../../shared/utils/jwt.js";
 import { UserConstant } from "./user.constant.js";
 import {
@@ -22,8 +21,7 @@ export const findUserByTokenService = async (token) => {
 
   const user = await findUserById(jwtUserDecode.id);
 
-  if (!user)
-    throw generateError(UserConstant.USER_NOT_FOUND_MSG, HTTP_STATUS.NOT_FOUND);
+  ErrorUtil.checkNotFound(user, UserConstant.USER_NOT_FOUND_MSG);
 
   return user;
 };
@@ -31,8 +29,7 @@ export const findUserByTokenService = async (token) => {
 export const findUserByIdService = async (id) => {
   const user = await findUserById(id);
 
-  if (!user)
-    throw generateError(UserConstant.USER_NOT_FOUND_MSG, HTTP_STATUS.NOT_FOUND);
+  ErrorUtil.checkNotFound(user, UserConstant.USER_NOT_FOUND_MSG);
 
   return user;
 };
@@ -40,8 +37,7 @@ export const findUserByIdService = async (id) => {
 export const findUserByEmailService = async (email) => {
   const user = await findUserByEmail(email);
 
-  if (!user)
-    throw generateError(UserConstant.USER_NOT_FOUND_MSG, HTTP_STATUS.NOT_FOUND);
+  ErrorUtil.checkNotFound(user, UserConstant.USER_NOT_FOUND_MSG);
 
   return user;
 };
