@@ -19,4 +19,4 @@ const projectSchema = new mongoose.Schema({
 
 projectSchema.index({ workspace: 1 });
 
-export default mongoose.Model("Project", projectSchema)
+export default mongoose.model("Project", projectSchema)

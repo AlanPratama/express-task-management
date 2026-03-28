@@ -53,3 +53,9 @@ export const loginService = async (data) => {
 
   return generateJwtData(token, existingUser)
 };
+
+export const getAuthenticatedUser = async (data) => {
+  const { authenticatedUser } = data
+
+  return await findUserByEmailService(authenticatedUser.email);
+}

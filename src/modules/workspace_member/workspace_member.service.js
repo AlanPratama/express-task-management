@@ -102,3 +102,15 @@ export const deleteWorkspaceMemberService = async (id, data) => {
 
   return await deleteWorkspaceMemberById(id);
 };
+
+export const validateWorkspaceMember = async (workspaceId, userId, isCheckOwnerOrAdmin) => {
+  const workspaceMember =
+    await findWorkspaceMemberByWorkspaceIdAndUserIdService(workspaceId, userId);
+
+  const allowedRoles = ["owner", "admin"];
+
+  ErrorUtil.checkForbidden(
+    isCheckOwnerOrAdmin && !allowedRoles.includes(workspaceMember.role),
+    "Akses member dibatasi",
+  );
+};

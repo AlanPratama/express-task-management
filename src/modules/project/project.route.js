@@ -1,9 +1,9 @@
-import Express from 'express'
-import { createProject, deleteProject, findAllProject, findProjectById, updateProject } from './project.controller'
-import { validationMiddleware } from '../../middlewares/validation.middleware'
-import { requestProjectValidation } from './project.validation'
+import express from 'express'
+import { createProject, deleteProject, findAllProject, findProjectById, updateProject } from './project.controller.js'
+import { validationMiddleware } from '../../middlewares/validation.middleware.js'
+import { requestProjectValidation } from './project.validation.js'
 
-const projectRoutes = Express.Router()
+const projectRoutes = express.Router()
 
 projectRoutes.get("/", findAllProject)
 projectRoutes.get("/:id", findProjectById)

@@ -1,32 +1,20 @@
 import { ErrorUtil } from "../../shared/utils/error.js";
 import { paginationReturn } from "../../shared/utils/pagination.js";
 import { findWorkspaceByIdService } from "../workspace/workspace.service.js";
-import { findWorkspaceMemberByWorkspaceIdAndUserIdService } from "../workspace_member/workspace_member.service.js";
+import { validateWorkspaceMember } from "../workspace_member/workspace_member.service.js";
 import { ProjectConstant } from "./project.constant.js";
 import projectModel from "./project.model.js";
 import {
-  createProject,
-  deleteProjectById,
-  findAllProjectPagination,
-  findProjectById,
-  updateProject,
+    createProject,
+    deleteProjectById,
+    findAllProjectPagination,
+    findProjectById,
+    updateProject,
 } from "./project.repository.js";
-
-const validateWorkspace = async (workspaceId, userId) => {
-  const workspaceMember =
-    await findWorkspaceMemberByWorkspaceIdAndUserIdService(workspaceId, userId);
-
-  const allowedRoles = ["owner", "admin"];
-
-  ErrorUtil.checkForbidden(
-    isCheckOwnerOrAdmin && !allowedRoles.includes(workspaceMember.role),
-    "Akses member dibatasi",
-  );
-};
 
 export const findAllProjectService = async (data) => {
   const { authenticatedUser, workspaceId, name, page, limit, skip } = data;
-  await validateWorkspace(workspaceId, authenticatedUser._id, false);
+  await validateWorkspaceMember(workspaceId, authenticatedUser._id, false);
 
   const workspaceMembers = await findAllProjectPagination(
     workspaceId,
@@ -42,19 +30,16 @@ export const findAllProjectService = async (data) => {
 };
 
 export const findProjectByIdService = async (id) => {
-  const { authenticatedUser } = data;
-  await validateWorkspace(workspaceId, authenticatedUser._id, false);
-
   const project = await findProjectById(id);
 
-  ErrorUtil.checkNotFound(!project, ProjectConstant.PROJECT_NOT_FOUND_MSG);
+  ErrorUtil.checkNotFound(project, ProjectConstant.PROJECT_NOT_FOUND_MSG);
 
   return project;
 };
 
 export const createProjectService = async (data) => {
   const { authenticatedUser, workspaceId, name, description } = data;
-  await validateWorkspace(workspaceId, authenticatedUser._id, true);
+  await validateWorkspaceMember(workspaceId, authenticatedUser._id, true);
 
   const workspace = await findWorkspaceByIdService(workspaceId);
 
@@ -71,7 +56,7 @@ export const createProjectService = async (data) => {
 
 export const updateProjectService = async (id, data) => {
   const { authenticatedUser, workspaceId, name, description } = data;
-  await validateWorkspace(workspaceId, authenticatedUser._id, true);
+  await validateWorkspaceMember(workspaceId, authenticatedUser._id, true);
 
   const project = await findProjectByIdService(id);
 
@@ -84,9 +69,9 @@ export const updateProjectService = async (id, data) => {
   return await updateProject(id, project).populate("workspace");
 };
 
-export const deleteProjectService = async (id) => {
-  const { authenticatedUser } = data;
-  await validateWorkspace(workspaceId, authenticatedUser._id, true);
+export const deleteProjectService = async (id, data) => {
+  const { authenticatedUser, workspaceId } = data;
+  await validateWorkspaceMember(workspaceId, authenticatedUser._id, true);
 
   await findProjectByIdService(id);
 

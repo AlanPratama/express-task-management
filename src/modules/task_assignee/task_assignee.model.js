@@ -19,4 +19,4 @@ const taskAssigneeSchema = new mongoose.Schema({
     timestamps: true
 })
 
-export default mongoose.Model(taskAssigneeSchema, "TaskAssignee")
+export default mongoose.model(taskAssigneeSchema, "TaskAssignee")
