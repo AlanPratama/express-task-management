@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { TaskConstant } from "./task.constant";
+import { TaskConstant } from "./task.constant.js";
 
 const taskSchema = new mongoose.Schema({
   project: {

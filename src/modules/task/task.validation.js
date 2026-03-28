@@ -1,8 +1,8 @@
 import { body } from "express-validator";
-import { VALIDATION_MESSAGE } from "../../shared/constants/validation_message.constant";
-import { generateError } from "../../shared/utils/error";
-import { HTTP_STATUS } from "../../shared/constants/http.constant";
-import { TaskConstant } from "./task.constant";
+import { VALIDATION_MESSAGE } from "../../shared/constants/validation_message.constant.js";
+import { generateError } from "../../shared/utils/error.js";
+import { HTTP_STATUS } from "../../shared/constants/http.constant.js";
+import { TaskConstant } from "./task.constant.js";
 
 export const requestTaskValidation = [
   body("projectId")

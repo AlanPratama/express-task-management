@@ -1,8 +1,8 @@
-import { HTTP_STATUS } from "../../shared/constants/http.constant";
-import { asyncHandler } from "../../shared/utils/asyncHandler";
-import { getPaginationParams } from "../../shared/utils/pagination";
-import { responseSuccess } from "../../shared/utils/response";
-import { createTaskService, deleteTaskService, findAllTaskPaginationService, findTaskByIdService, updateTaskService } from "./task.service";
+import { HTTP_STATUS } from "../../shared/constants/http.constant.js";
+import { asyncHandler } from "../../shared/utils/asyncHandler.js";
+import { getPaginationParams } from "../../shared/utils/pagination.js";
+import { responseSuccess } from "../../shared/utils/response.js";
+import { createTaskService, deleteTaskService, findAllTaskPaginationService, findTaskByIdService, updateTaskService } from "./task.service.js";
 
 export const findAllTask = asyncHandler(async (req, res) => {
 req.body = getPaginationParams(req)

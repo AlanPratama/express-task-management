@@ -1,4 +1,4 @@
-import taskModel from "./task.model";
+import taskModel from "./task.model.js";
 
 export const findAllTaskPagination = async (projectId, skip, limit) => {
   const criteria = { project: projectId };

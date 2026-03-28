@@ -1,17 +1,17 @@
-import { ErrorUtil } from "../../shared/utils/error";
-import { paginationReturn } from "../../shared/utils/pagination";
-import projectModel from "../project/project.model";
-import { findProjectByIdService } from "../project/project.service";
-import { findUserByIdService } from "../user/user.service";
-import { TaskConstant } from "./task.constant";
-import taskModel from "./task.model";
+import { ErrorUtil } from "../../shared/utils/error.js";
+import { paginationReturn } from "../../shared/utils/pagination.js";
+import projectModel from "../project/project.model.js";
+import { findProjectByIdService } from "../project/project.service.js";
+import { findUserByIdService } from "../user/user.service.js";
+import { TaskConstant } from "./task.constant.js";
+import taskModel from "./task.model.js";
 import {
   createTask,
   deleteTaskById,
   findAllTaskPagination,
   findTaskById,
   updateTask,
-} from "./task.repository";
+} from "./task.repository.js";
 
 export const findAllTaskPaginationService = async (data) => {
   const { projectId, page, limit, skip } = data;
