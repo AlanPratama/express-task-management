@@ -19,8 +19,6 @@ export const findProjectById = asyncHandler(async (req, res) => {
 })
 
 export const createProject = asyncHandler(async (req, res) => {
-    console.log(`req.body: ${req.body.authenticatedUser.email}`);
-    
     const data = await createProjectService(req.body)
 
     responseSuccess(res, HTTP_STATUS.OK, "Berhasil membuat data projek", data)

@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 
 const taskAssigneeSchema = new mongoose.Schema({
     task: {
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Task',
         required: true
     },
-    user: {
-        type: mongoose.Types.ObjectId,
+    assignedUser: {
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true
     },
@@ -19,4 +19,4 @@ const taskAssigneeSchema = new mongoose.Schema({
     timestamps: true
 })
 
-export default mongoose.model(taskAssigneeSchema, "TaskAssignee")
+export default mongoose.model("TaskAssignee", taskAssigneeSchema)

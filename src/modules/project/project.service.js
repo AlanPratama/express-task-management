@@ -16,7 +16,7 @@ export const findAllProjectService = async (data) => {
   const { authenticatedUser, workspaceId, page, limit, skip } = data;
   await validateWorkspaceMember(workspaceId, authenticatedUser._id, false);
 
-  const workspaceMembers = await findAllProjectPagination(
+  const projects = await findAllProjectPagination(
     workspaceId,
     skip,
     limit,
@@ -25,7 +25,7 @@ export const findAllProjectService = async (data) => {
   const totalItems = await projectModel.countDocuments({});
   const totalPages = Math.ceil(totalItems / limit);
 
-  return paginationReturn(workspaceMembers, page, totalItems, totalPages);
+  return paginationReturn(projects, page, totalItems, totalPages);
 };
 
 export const findProjectByIdService = async (id) => {

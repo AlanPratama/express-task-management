@@ -14,9 +14,6 @@ export const checkValidUser = async (workspaceId, userId) => {
 };
 
 export const checkOwnedUserWorkspaceMember = async (workspaceId, userId) => {
-  console.log(`aaworkspaceId: ${workspaceId}`);
-  console.log(`bbuserId: ${userId}`);
-
   const existingWorkspaceMember =
     await findWorkspaceMemberByWorkspaceIdAndUserId(workspaceId, userId);
 

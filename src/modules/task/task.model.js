@@ -37,4 +37,18 @@ const taskSchema = new mongoose.Schema({
   timestamps: true
 })
 
+// taskSchema.pre("findOneAndDelete", async function (next) {
+//   try {
+//     // 1. Ambil query filter (misal: { _id: '...' })
+//     const query = this.getQuery();
+    
+//     // 2. Hapus semua TaskAssignee yang merujuk ke Task ini
+//     await TaskAssignee.deleteMany({ task: query._id });
+    
+//     next();
+//   } catch (error) {
+//     next(error);
+//   }
+// });
+
 export default mongoose.model("Task", taskSchema)

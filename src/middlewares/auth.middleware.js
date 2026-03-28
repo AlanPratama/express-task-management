@@ -19,7 +19,6 @@ export const authMiddleware = (req, res, next) => {
         
         
         req.body.authenticatedUser = decoded.data
-        console.log(`decoded.data: ${req.body.authenticatedUser.email}`);
 
         next()
     } catch(error) {

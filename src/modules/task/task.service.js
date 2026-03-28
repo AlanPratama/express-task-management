@@ -15,12 +15,12 @@ import {
 export const findAllTaskPaginationService = async (data) => {
   const { projectId, page, limit, skip } = data;
 
-  const workspaceMembers = await findAllTaskPagination(projectId, skip, limit);
+  const tasks = await findAllTaskPagination(projectId, skip, limit);
 
   const totalItems = await taskModel.countDocuments({});
   const totalPages = Math.ceil(totalItems / limit);
 
-  return paginationReturn(workspaceMembers, page, totalItems, totalPages);
+  return paginationReturn(tasks, page, totalItems, totalPages);
 };
 
 export const findTaskByIdService = async (id) => {
@@ -45,15 +45,13 @@ export const createTaskService = async (data) => {
   const project = await findProjectByIdService(projectId);
   const owner = await findUserByIdService(authenticatedUser._id)
 
-  // const formattedDue = new Date(dueDate);
-
   const task = await createTask(
     new taskModel({
       project,
       owner,
       title,
       description,
-      status,
+      status: TaskConstant.STATUS.PENDING.value,
       priority,
       dueDate,
     }),
