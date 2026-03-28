@@ -1,27 +1,29 @@
 import mongoose from "mongoose";
 
-const taskAttachmentSchema = new mongoose.Schema({
+const taskAttachmentSchema = new mongoose.Schema(
+  {
     task: {
-        type: mongoose.Types.ObjectId,
-        ref: "Task",
-        required: true
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Task",
+      required: true,
     },
-    user: {
-        type: mongoose.Types.ObjectId,
-        ref: "User",
-        required: true
+    uploadedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
-    file_path: {
-        type: String,
-        required: true
+    fileUrl: {
+      type: String,
+      required: true,
     },
-    uploaded_by: {
-        type: mongoose.Types.ObjectId,
-        ref: "User",
-        required: true
-    },
-}, {
-    timestamps: true
-})
+    publicId: {
+      type: String,
+      required: true
+    }
+  },
+  {
+    timestamps: true,
+  },
+);
 
-export default mongoose.model("TaskAttachment", taskAttachmentSchema)
+export default mongoose.model("TaskAttachment", taskAttachmentSchema);

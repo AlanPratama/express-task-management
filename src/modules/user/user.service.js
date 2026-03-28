@@ -55,8 +55,8 @@ const logicUpdateUser = async (id, data) => {
 
     const res = await cloudinaryUploadBuffer(
       CLOUDINARY_FOLDER.USERS,
-      CLOUDINARY_TRANSFORM.PROFILE_PICTURE,
       data.photoBuffer,
+      CLOUDINARY_TRANSFORM.PROFILE_PICTURE,
     );
 
     existUser.photoUrl = res.secure_url;

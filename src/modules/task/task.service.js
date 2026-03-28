@@ -36,7 +36,7 @@ export const createTaskService = async (data) => {
     authenticatedUser,
     projectId,
     title,
-    description,
+    content,
     status,
     priority,
     dueDate,
@@ -50,7 +50,7 @@ export const createTaskService = async (data) => {
       project,
       owner,
       title,
-      description,
+      content,
       status: TaskConstant.STATUS.PENDING.value,
       priority,
       dueDate,
@@ -64,7 +64,7 @@ export const updateTaskService = async (id, data) => {
   const {
     projectId,
     title,
-    description,
+    content,
     status,
     priority,
     dueDate,
@@ -75,7 +75,7 @@ export const updateTaskService = async (id, data) => {
   
   task.project = project
   task.title = title
-  task.description = description
+  task.content = content
   task.status = status
   task.priority = priority
   task.dueDate = dueDate

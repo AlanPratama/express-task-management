@@ -3,5 +3,6 @@ export const CLOUDINARY_TRANSFORM = {
 }
 
 export const CLOUDINARY_FOLDER = {
-    USERS: "users"
+    USERS: "users",
+    TASK: "task"
 }

@@ -7,6 +7,7 @@ import workspaceMemberRoutes from '../modules/workspace_member/workspace_member.
 import projectRoutes from '../modules/project/project.route.js'
 import taskRoutes from '../modules/task/task.route.js'
 import taskAssigneeRoutes from '../modules/task_assignee/task_assignee.route.js'
+import taskAttachmentRoutes from '../modules/task_attachment/task_attachment.route.js'
 
 const routes = express.Router()
 
@@ -17,5 +18,6 @@ routes.use("/workspace-members", authMiddleware, workspaceMemberRoutes)
 routes.use("/projects", authMiddleware, projectRoutes)
 routes.use("/tasks", authMiddleware, taskRoutes)
 routes.use("/task-assignees", authMiddleware, taskAssigneeRoutes)
+routes.use("/task-attachments", authMiddleware, taskAttachmentRoutes)
 
 export default routes

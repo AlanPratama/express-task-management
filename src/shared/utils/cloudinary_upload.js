@@ -3,8 +3,8 @@ import { getCloudinary } from "./cloudinary.js";
 
 export const cloudinaryUploadBuffer = (
   folder,
-  transformation = [],
   fileBuffer,
+  transformation = [],
 ) => {
   return new Promise((resolve, reject) => {
     const stream = getCloudinary().uploader.upload_stream(
